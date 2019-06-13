@@ -62,11 +62,10 @@ func (w *grpcWebResponse) Flush() {
 	if w.wroteHeaders || w.wroteBody {
 		// Work around the fact that WriteHeader and a call to Flush would have caused a 200 response.
 		// This is the case when there is no payload.
-		switch w.wrapped.(type) {
-		case http.Flusher:
-			w.wrapped.(http.Flusher).Flush()
-		default:
 
+		f, ok := w.wrapped.(http.Flusher)
+		if ok {
+			f.Flush()
 		}
 	}
 }
