@@ -105,7 +105,7 @@ func (w *grpcWebResponse) copyTrailersToPayload() {
 	binary.BigEndian.PutUint32(trailerGrpcDataHeader[1:5], uint32(trailerBuffer.Len()))
 	w.wrapped.Write(trailerGrpcDataHeader)
 	w.wrapped.Write(trailerBuffer.Bytes())
-	w.wrapped.(http.Flusher).Flush()
+	w.Flush()
 }
 
 func extractTrailingHeaders(src http.Header, flushed http.Header) http.Header {
