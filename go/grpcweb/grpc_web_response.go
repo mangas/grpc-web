@@ -92,7 +92,7 @@ func (w *grpcWebResponse) finishRequest(req *http.Request) {
 		w.copyTrailersToPayload()
 	} else {
 		w.WriteHeader(http.StatusOK)
-		w.wrapped.(http.Flusher).Flush()
+		w.Flush()
 	}
 }
 
@@ -159,5 +159,5 @@ func (w *base64ResponseWriter) Flush() {
 		grpclog.Errorf("ignoring error Flushing base64 encoder: %v", err)
 	}
 	w.newEncoder()
-	w.wrapped.(http.Flusher).Flush()
+	w.Flush()
 }
